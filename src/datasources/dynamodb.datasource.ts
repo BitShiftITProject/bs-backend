@@ -3,7 +3,8 @@ import {juggler} from '@loopback/repository';
 
 const config = {
   name: 'dynamodb',
-  connector: 'dynamodb',
+  // connector: require('jugglingdb-dynamodb'),
+  connector: ('dynamodb'),
   credentials: 'env',
   region: "ap-southeast-2"
 };
