@@ -54,6 +54,7 @@
     "@loopback/service-proxy": "^2.3.7",
     "aws-sdk": "^2.745.0",
     "dotenv": "^8.2.0",
+    "jugglingdb-dynamodb": "^0.1.9-6",
     "loopback-connector-dynamodb": "0.1.0-5",
     "loopback-connector-mongodb": "^5.3.0",
     "loopback-datasource-juggler": "^4.24.0",
