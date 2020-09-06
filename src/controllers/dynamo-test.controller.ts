@@ -4,17 +4,21 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {DynamoTest} from '../models';
 import {DynamoTestRepository} from '../repositories';
@@ -22,7 +26,7 @@ import {DynamoTestRepository} from '../repositories';
 export class DynamoTestController {
   constructor(
     @repository(DynamoTestRepository)
-    public dynamoTestRepository : DynamoTestRepository,
+    public dynamoTestRepository: DynamoTestRepository,
   ) {}
 
   @post('/dynamo-tests', {
@@ -39,7 +43,7 @@ export class DynamoTestController {
         'application/json': {
           schema: getModelSchemaRef(DynamoTest, {
             title: 'NewDynamoTest',
-            exclude: ['id'],
+            // exclude: ['id'],
           }),
         },
       },
