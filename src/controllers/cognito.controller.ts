@@ -2,17 +2,11 @@
 import {post, requestBody} from '@loopback/rest';
 import AWS from 'aws-sdk';
 
-const config = {
-  region: process.env.S3_REGION,
-  accessKeyId: process.env.S3_ACCESSKEYID,
-  secretAccessKey: process.env.S3_SECRETACCESSKEY,
-  endpoint: process.env.S3_ENDPOINT,
-  AWS_REGION: process.env.S3_REGION
-}
-
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
   region: 'ap-southeast-2'
 });
+
+const clientId = "1845v8gfosmuf8ftpgjuuqm6fe";
 
 export class CognitoController {
   constructor() {}
@@ -20,7 +14,7 @@ export class CognitoController {
   @post('/cognito/signup', {
     responses: {
       '200': {
-        description: 'Bucket creation response',
+        description: 'Create new user in Cognito',
         content: {
           'application/json': {
             schema: {
@@ -57,13 +51,69 @@ export class CognitoController {
     userData: {Email: string, Password: string},
   ) {
     var params = {
-      ClientId: "1845v8gfosmuf8ftpgjuuqm6fe",
+      ClientId: clientId,
       Username: userData.Email,
       Password: userData.Password,
     };
 
     try {
       const res = await cognitoidentityserviceprovider.signUp(params).promise();
+      return res
+    } catch (err) {
+      throw err
+    }
+  }
+
+  @post('/cognito/authenticate', {
+    responses: {
+      '200': {
+        description: 'Authenticate user with username and password',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                Location: {type: 'string'},
+                headers: {
+                  type: 'object',
+                  properties: {
+                    'Content-Type': {type: 'string'},
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async authenticate(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              Email: {type: 'string'},
+              Password: {type: 'string'}
+            },
+          },
+        },
+      },
+    })
+    userData: {Email: string, Password: string},
+  ) {
+    var params = {
+      AuthFlow: "USER_PASSWORD_AUTH",
+      ClientId: clientId,
+      AuthParameters: {
+        USERNAME: userData.Email,
+        PASSWORD: userData.Password,
+      }
+    };
+
+    try {
+      const res = await cognitoidentityserviceprovider.initiateAuth(params).promise();
       return res
     } catch (err) {
       throw err
