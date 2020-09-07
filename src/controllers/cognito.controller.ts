@@ -6,7 +6,7 @@ const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
   region: 'ap-southeast-2'
 });
 
-const clientId = "1845v8gfosmuf8ftpgjuuqm6fe";
+const clientId = "7c772avb8631ofcue4ef0rka6l";
 
 export class CognitoController {
   constructor() {}
