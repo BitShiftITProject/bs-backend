@@ -6,8 +6,6 @@ const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
   region: 'ap-southeast-2'
 });
 
-const clientId = "7c772avb8631ofcue4ef0rka6l";
-
 export class CognitoController {
   constructor() {}
 
@@ -50,8 +48,9 @@ export class CognitoController {
     })
     userData: {Email: string, Password: string},
   ) {
+
     var params = {
-      ClientId: clientId,
+      ClientId: process.env.COGNITO_CLIENT_ID!,
       Username: userData.Email,
       Password: userData.Password,
     };
@@ -105,7 +104,7 @@ export class CognitoController {
   ) {
     var params = {
       AuthFlow: "USER_PASSWORD_AUTH",
-      ClientId: clientId,
+      ClientId: process.env.COGNITO_CLIENT_ID!,
       AuthParameters: {
         USERNAME: userData.Email,
         PASSWORD: userData.Password,

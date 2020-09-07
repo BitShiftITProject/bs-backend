@@ -1,4 +1,6 @@
+import * as dotenv from 'dotenv';
 import {ApplicationConfig, BitshiftApplication} from './application';
+dotenv.config();
 
 export * from './application';
 

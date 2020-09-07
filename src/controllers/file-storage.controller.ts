@@ -15,9 +15,9 @@ function bufferToStream(buffer) {
 }
 
 const config = {
-  region: process.env.S3_REGION,
-  accessKeyId: process.env.S3_ACCESSKEYID,
-  secretAccessKey: process.env.S3_SECRETACCESSKEY,
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   endpoint: process.env.S3_ENDPOINT
 }
 const s3 = new AWS.S3(config)
