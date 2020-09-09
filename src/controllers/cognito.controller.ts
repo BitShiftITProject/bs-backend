@@ -39,6 +39,12 @@ export class CognitoController {
           schema: {
             type: 'object',
             properties: {
+              Username: {
+                type: 'string',
+                id: 'true'
+              },
+              FirstName: {type: 'string'},
+              LastName: {type: 'string'},
               Email: {type: 'string'},
               Password: {type: 'string'}
             },
@@ -46,7 +52,10 @@ export class CognitoController {
         },
       },
     })
-    userData: {Email: string, Password: string},
+    userData: {
+      Email: string, Password: string, Username: string,
+      FirstName: string, LastName: string
+    },
   ) {
 
     var params = {
