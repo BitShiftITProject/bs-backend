@@ -6,21 +6,24 @@ const fs = require('fs')
 
 //reading variables from .env
 const config = {
-  region: process.env.S3_REGION,
-  accessKeyId: process.env.S3_ACCESSKEYID,
-  secretAccessKey: process.env.S3_SECRETACCESSKEY,
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   endpoint: process.env.S3_ENDPOINT // it could be any S3 provider
 }
 
 const s3 = new AWS.S3(config)
 
+console.log(config)
 //file to upload
 const fileContent = fs.readFileSync('test.jpg')
 
 //Setting up S3 upload parameters
 const params = {
-  Bucket: 'media-service-storage',
-  Key: 'ff.jpg', // File name you want to save as in S3
+  // Bucket: 'media-service-storage',
+  Bucket: 'media-storage-bucket12',
+  // Key: 'ff.jpg', // File name you want to save as in S3
+  Key: 'test.jpg', // File name you want to save as in S3
   Body: fileContent
 }
 
