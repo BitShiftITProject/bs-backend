@@ -2,6 +2,7 @@
 import {post, requestBody} from '@loopback/rest';
 import AWS from 'aws-sdk';
 
+require("dotenv").config()
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
   region: 'ap-southeast-2'
 });
@@ -39,6 +40,12 @@ export class CognitoController {
           schema: {
             type: 'object',
             properties: {
+              Username: {
+                type: 'string',
+                id: 'true'
+              },
+              FirstName: {type: 'string'},
+              LastName: {type: 'string'},
               Email: {type: 'string'},
               Password: {type: 'string'}
             },
@@ -46,7 +53,10 @@ export class CognitoController {
         },
       },
     })
-    userData: {Email: string, Password: string},
+    userData: {
+      Email: string, Password: string, Username: string,
+      FirstName: string, LastName: string
+    },
   ) {
 
     var params = {
@@ -54,7 +64,6 @@ export class CognitoController {
       Username: userData.Email,
       Password: userData.Password,
     };
-
     try {
       const res = await cognitoidentityserviceprovider.signUp(params).promise();
       return res
