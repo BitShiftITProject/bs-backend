@@ -53,6 +53,7 @@
     "@loopback/rest-explorer": "^2.2.9",
     "@loopback/service-proxy": "^2.3.7",
     "aws-sdk": "^2.745.0",
+    "buffer": "^5.6.0",
     "dotenv": "^8.2.0",
     "jugglingdb-dynamodb": "^0.1.9-6",
     "loopback-connector-dynamodb": "0.1.0-5",
@@ -60,7 +61,8 @@
     "loopback-datasource-juggler": "^4.24.0",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@loopback/build": "^6.2.1",
