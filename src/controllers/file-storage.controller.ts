@@ -106,6 +106,68 @@ export class StorageController {
     }
   }
 
+  @get('/buckets/{bucketName}/list', {
+    responses: {
+      '200': {
+        description: 'List of upto 1000 items in the bucket ',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                Key: {type: 'string'},
+                Size: {type: 'string'}
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+  async listItems(@param.path.string('bucketName') bucket: string): Promise<object> {
+    var params = {
+      Bucket: bucket
+    }
+    try {
+      const items = await s3.listObjectsV2(params).promise()
+      return items
+    } catch (err) {
+      throw (err)
+    }
+  }
+
+  @get('/buckets/{bucketName}/{itemKey}', {
+    responses: {
+      '200': {
+        description: 'Get item from S3 bucket',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                Key: {type: 'string'},
+                Size: {type: 'string'}
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+  async getItem(@param.path.string('bucketName') bucket: string,
+    @param.path.string('itemKey') key: string): Promise<object> {
+    var params = {
+      Bucket: bucket,
+      Key: key
+    }
+    try {
+      const item = await s3.getObject(params).promise()
+      return item
+    } catch (err) {
+      throw (err)
+    }
+  }
+
   @del('/buckets/{bucketName}', {
     responses: {
       '204': {
