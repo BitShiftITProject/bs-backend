@@ -1,10 +1,11 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+require('dotenv').config();
 
 const config = {
   name: 'mAtlas',
   connector: 'mongodb',
-  url: 'mongodb+srv://admin:Admin123!@cluster0.1hzjh.mongodb.net/bitshift_db?retryWrites=true&w=majority',
+  url: `mongodb+srv://${process.env.ATLAS_USER_NAME}:${process.env.ATLAS_USER_PASSWORD}@cluster0.1hzjh.mongodb.net/${process.env.ATLAS_DB_NAME}?retryWrites=true&w=majority`,
   host: '',
   port: 0,
   user: '',
