@@ -29,6 +29,50 @@ export class Users extends Entity {
   })
   username: string;
 
+  @property({
+    type: 'string',
+  })
+  occupation: string;
+
+  @property({
+    type: 'string',
+  })
+  description: string;
+
+  @property({
+    type: 'number',
+  })
+  phone: number;
+
+  @property({
+    type: 'string',
+  })
+  address_line_1: string;
+
+  @property({
+    type: 'string',
+  })
+  address_line_2: string;
+
+  @property({
+    type: 'string',
+  })
+  town_suburb: string;
+
+  @property({
+    type: 'string',
+  })
+  State: string;
+
+  @property({
+    type: 'string',
+  })
+  country: string;
+
+  @property({
+    type: 'object',
+  })
+  other_website_usernames: object;
 
   constructor(data?: Partial<Users>) {
     super(data);
