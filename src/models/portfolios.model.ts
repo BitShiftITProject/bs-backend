@@ -1,7 +1,7 @@
-import {Model, model, property} from '@loopback/repository';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Portfolios extends Model {
+export class Portfolios extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -22,7 +22,7 @@ export class Portfolios extends Model {
   date_created: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   owner: string;
