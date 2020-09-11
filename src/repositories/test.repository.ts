@@ -1,6 +1,6 @@
 import {DefaultCrudRepository} from '@loopback/repository';
 import {Test, TestRelations} from '../models';
-import {MlabDataSource} from '../datasources';
+import {MAtlasDataSource} from '../datasources';
 import {inject} from '@loopback/core';
 
 export class TestRepository extends DefaultCrudRepository<
@@ -9,7 +9,7 @@ export class TestRepository extends DefaultCrudRepository<
   TestRelations
 > {
   constructor(
-    @inject('datasources.mlab') dataSource: MlabDataSource,
+    @inject('datasources.mAtlas') dataSource: MAtlasDataSource,
   ) {
     super(Test, dataSource);
   }
