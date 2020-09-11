@@ -17,6 +17,7 @@ export class Users extends Model {
   @property({
     type: 'string',
     required: true,
+    id: true
   })
   email: string;
 

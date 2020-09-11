@@ -11,11 +11,21 @@ export class Portfolios extends Model {
   title: string;
 
   @property({
+    type: 'object',
+  })
+  pages: object;
+
+  @property({
     type: 'date',
     required: true,
   })
   date_created: string;
 
+  @property({
+    type: 'date',
+    required: true,
+  })
+  owner: string;
 
   constructor(data?: Partial<Portfolios>) {
     super(data);
