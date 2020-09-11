@@ -2,11 +2,15 @@ import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
 const config = {
-  name: 'dynamodb',
-  // connector: require('jugglingdb-dynamodb'),
-  connector: ('dynamodb'),
-  credentials: 'env',
-  region: "ap-southeast-2"
+  name: 'mAtlas',
+  connector: 'mongodb',
+  url: 'mongodb+srv://admin:Admin123!@cluster0.1hzjh.mongodb.net/bitshift_db?retryWrites=true&w=majority',
+  host: '',
+  port: 0,
+  user: '',
+  password: '',
+  database: '',
+  useNewUrlParser: true
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -14,13 +18,13 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class DynamodbDataSource extends juggler.DataSource
+export class MAtlasDataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'dynamodb';
+  static dataSourceName = 'mAtlas';
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.dynamodb', {optional: true})
+    @inject('datasources.config.mAtlas', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);

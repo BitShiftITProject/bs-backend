@@ -1,3 +1,3 @@
-export * from './dynamodb.datasource';
+export * from './m-atlas.datasource';
 export * from './mlab.datasource';
 
