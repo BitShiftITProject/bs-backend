@@ -35,6 +35,12 @@ export class Users extends Entity {
   occupation: string;
 
   @property({
+    type: 'array',
+    itemType: 'string'
+  })
+  portfolios: string[];
+
+  @property({
     type: 'string',
   })
   description: string;
