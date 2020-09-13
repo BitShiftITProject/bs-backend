@@ -12,6 +12,12 @@ export class Users extends Entity {
     type: 'string',
     required: true,
   })
+  cognito_id: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   last_name: string;
 
   @property({
