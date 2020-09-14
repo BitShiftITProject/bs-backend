@@ -5,6 +5,12 @@ export class Portfolios extends Entity {
   @property({
     type: 'string',
     id: true,
+    generated: true
+  })
+  id: string;
+
+  @property({
+    type: 'string',
     generated: false,
     required: true,
   })
