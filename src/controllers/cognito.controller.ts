@@ -92,7 +92,8 @@ export class CognitoController {
                 headers: {
                   type: 'object',
                   properties: {
-                    'Content-Type': {type: 'string'},
+                    'Content-Type': {type: 'application/json'},
+                    'Access-Control-Allow-Origin': "*"
                   },
                 },
               },
