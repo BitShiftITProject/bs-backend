@@ -23,7 +23,7 @@ export class Users extends Entity {
   @property({
     type: 'string',
     required: true,
-    id: true
+    id: true,
   })
   email: string;
 
@@ -36,15 +36,20 @@ export class Users extends Entity {
   username: string;
 
   @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  portfolios: string[];
+
+  @property({
+    type: 'string',
+  })
+  profile_email: string;
+
+  @property({
     type: 'string',
   })
   occupation: string;
-
-  @property({
-    type: 'array',
-    itemType: 'string'
-  })
-  portfolios: string[];
 
   @property({
     type: 'string',
@@ -52,9 +57,20 @@ export class Users extends Entity {
   description: string;
 
   @property({
-    type: 'number',
+    type: 'array',
+    itemType: 'object',
   })
-  phone: number;
+  tags: object[];
+
+  @property({
+    type: 'string',
+  })
+  phone: string;
+
+  @property({
+    type: 'string',
+  })
+  company: string;
 
   @property({
     type: 'string',
@@ -74,17 +90,17 @@ export class Users extends Entity {
   @property({
     type: 'string',
   })
-  State: string;
+  postcode: string;
+
+  @property({
+    type: 'string',
+  })
+  state: string;
 
   @property({
     type: 'string',
   })
   country: string;
-
-  @property({
-    type: 'object',
-  })
-  other_website_usernames: object;
 
   constructor(data?: Partial<Users>) {
     super(data);

@@ -2,9 +2,9 @@
 import {post, requestBody} from '@loopback/rest';
 import AWS from 'aws-sdk';
 
-require("dotenv").config()
+require('dotenv').config();
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
-  region: 'ap-southeast-2'
+  region: 'ap-southeast-2',
 });
 
 export class CognitoController {
@@ -42,23 +42,25 @@ export class CognitoController {
             properties: {
               Username: {
                 type: 'string',
-                id: 'true'
+                id: 'true',
               },
               FirstName: {type: 'string'},
               LastName: {type: 'string'},
               Email: {type: 'string'},
-              Password: {type: 'string'}
+              Password: {type: 'string'},
             },
           },
         },
       },
     })
     userData: {
-      Email: string, Password: string, Username: string,
-      FirstName: string, LastName: string
+      Email: string;
+      Password: string;
+      Username: string;
+      FirstName: string;
+      LastName: string;
     },
   ) {
-
     var params = {
       ClientId: process.env.COGNITO_CLIENT_ID!,
       Username: userData.Email,
@@ -66,9 +68,9 @@ export class CognitoController {
     };
     try {
       const res = await cognitoidentityserviceprovider.signUp(params).promise();
-      return res
+      return res;
     } catch (err) {
-      throw err
+      throw err;
     }
   }
 
@@ -103,28 +105,33 @@ export class CognitoController {
             type: 'object',
             properties: {
               Email: {type: 'string'},
-              Password: {type: 'string'}
+              Password: {type: 'string'},
             },
           },
         },
       },
     })
-    userData: {Email: string, Password: string},
+    userData: {
+      Email: string;
+      Password: string;
+    },
   ) {
     var params = {
-      AuthFlow: "USER_PASSWORD_AUTH",
+      AuthFlow: 'USER_PASSWORD_AUTH',
       ClientId: process.env.COGNITO_CLIENT_ID!,
       AuthParameters: {
         USERNAME: userData.Email,
         PASSWORD: userData.Password,
-      }
+      },
     };
 
     try {
-      const res = await cognitoidentityserviceprovider.initiateAuth(params).promise();
-      return res
+      const res = await cognitoidentityserviceprovider
+        .initiateAuth(params)
+        .promise();
+      return res;
     } catch (err) {
-      throw err
+      throw err;
     }
   }
 }
