@@ -1,3 +1,4 @@
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -22,11 +23,25 @@ import {
 } from '@loopback/rest';
 import {Users} from '../models';
 import {UsersRepository} from '../repositories';
+import {CognitoController} from './cognito.controller';
+
+const userSchema = {
+  type: 'object',
+  properties: {
+    first_name: {type: 'string'},
+    last_name: {type: 'string'},
+    email: {type: 'string'},
+    password: {type: 'string'},
+    username: {type: 'string'}
+  },
+};
 
 export class UsersController {
   constructor(
     @repository(UsersRepository)
     public usersRepository: UsersRepository,
+    @inject('controllers.CognitoController')
+    public cognitoController: CognitoController
   ) {}
 
   @post('/users', {
@@ -51,6 +66,52 @@ export class UsersController {
     users: Users,
   ): Promise<Users> {
     return this.usersRepository.create(users);
+  }
+
+  @post('/addUser', {
+    responses: {
+      '200': {
+        description: 'Users model instance',
+        content: {
+          'application/json': {
+            schema: userSchema,
+          }
+        },
+      },
+    },
+  })
+  async addUser(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: userSchema,
+        },
+      },
+    })
+    userData: {
+      first_name: string,
+      last_name: string,
+      email: string,
+      password: string,
+      username: string
+    },
+  ): Promise<object> {
+
+    const cognitoUser = await this.cognitoController.createUser(userData.email, userData.password);
+    if (cognitoUser) {
+      var users = {
+        "first_name": userData.first_name,
+        "last_name": userData.last_name,
+        "email": userData.email,
+        "username": userData.username,
+        "cognito_id": cognitoUser.UserSub
+      }
+      return this.usersRepository.create(users);
+    } else {
+      return {
+        "res": "Failed creating user in cognito id"
+      }
+    }
   }
 
   @get('/users/count', {
