@@ -5,7 +5,7 @@ export class Portfolios extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true
+    generated: true,
   })
   id: string;
 
@@ -17,15 +17,14 @@ export class Portfolios extends Entity {
   title: string;
 
   @property({
+    type: 'string',
+  })
+  description: string;
+
+  @property({
     type: 'object',
   })
   pages: object;
-
-  @property({
-    type: 'date',
-    required: true,
-  })
-  date_created: string;
 
   @property({
     type: 'string',

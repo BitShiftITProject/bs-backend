@@ -7,13 +7,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Portfolios} from '../models';
@@ -22,7 +22,7 @@ import {PortfoliosRepository} from '../repositories';
 export class PortfoliosController {
   constructor(
     @repository(PortfoliosRepository)
-    public portfoliosRepository : PortfoliosRepository,
+    public portfoliosRepository: PortfoliosRepository,
   ) {}
 
   @post('/portfolios', {
@@ -39,7 +39,6 @@ export class PortfoliosController {
         'application/json': {
           schema: getModelSchemaRef(Portfolios, {
             title: 'NewPortfolios',
-            
           }),
         },
       },
@@ -120,7 +119,8 @@ export class PortfoliosController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Portfolios, {exclude: 'where'}) filter?: FilterExcludingWhere<Portfolios>
+    @param.filter(Portfolios, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Portfolios>,
   ): Promise<Portfolios> {
     return this.portfoliosRepository.findById(id, filter);
   }
