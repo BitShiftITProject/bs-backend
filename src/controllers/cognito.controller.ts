@@ -10,6 +10,20 @@ const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
 export class CognitoController {
   constructor() {}
 
+  async createUser(email: string, password: string) {
+    var params = {
+      ClientId: process.env.COGNITO_CLIENT_ID!,
+      Username: email,
+      Password: password,
+    };
+    try {
+      const res = await cognitoidentityserviceprovider.signUp(params).promise();
+      return res
+    } catch (err) {
+      throw err
+    }
+  }
+
   @post('/cognito/signup', {
     responses: {
       '200': {
@@ -40,12 +54,6 @@ export class CognitoController {
           schema: {
             type: 'object',
             properties: {
-              Username: {
-                type: 'string',
-                id: 'true',
-              },
-              FirstName: {type: 'string'},
-              LastName: {type: 'string'},
               Email: {type: 'string'},
               Password: {type: 'string'},
             },
@@ -54,11 +62,7 @@ export class CognitoController {
       },
     })
     userData: {
-      Email: string;
-      Password: string;
-      Username: string;
-      FirstName: string;
-      LastName: string;
+      Email: string, Password: string
     },
   ) {
     var params = {
