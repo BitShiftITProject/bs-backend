@@ -47,19 +47,21 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^2.5.0",
-    "@loopback/core": "^2.9.4",
-    "@loopback/openapi-v3": "^3.4.8",
-    "@loopback/repository": "^2.11.1",
-    "@loopback/rest": "^6.1.0",
-    "@loopback/rest-explorer": "^2.2.9",
-    "@loopback/service-proxy": "^2.3.7",
-    "aws-sdk": "^2.745.0",
+    "@loopback/authentication": "^7.0.1",
+    "@loopback/authentication-jwt": "^0.7.1",
+    "@loopback/boot": "^2.5.1",
+    "@loopback/core": "^2.10.1",
+    "@loopback/openapi-v3": "^3.4.9",
+    "@loopback/repository": "^2.11.2",
+    "@loopback/rest": "^6.2.0",
+    "@loopback/rest-explorer": "^2.2.10",
+    "@loopback/service-proxy": "^2.3.8",
+    "aws-sdk": "^2.758.0",
     "buffer": "^5.6.0",
     "dotenv": "^8.2.0",
     "jugglingdb-dynamodb": "^0.1.9-6",
     "loopback-connector-dynamodb": "0.1.0-5",
-    "loopback-connector-mongodb": "^5.3.0",
+    "loopback-connector-mongodb": "^5.4.0",
     "loopback-datasource-juggler": "^4.24.0",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.1",
@@ -67,12 +69,12 @@
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
-    "@loopback/build": "^6.2.1",
+    "@loopback/build": "^6.2.4",
+    "@loopback/eslint-config": "^9.0.2",
+    "@loopback/testlab": "^3.2.6",
+    "@types/node": "^10.17.35",
+    "eslint": "^7.9.0",
     "source-map-support": "^0.5.19",
-    "@loopback/testlab": "^3.2.3",
-    "@types/node": "^10.17.28",
-    "@loopback/eslint-config": "^9.0.1",
-    "eslint": "^7.7.0",
     "typescript": "~3.9.7"
   }
 }
