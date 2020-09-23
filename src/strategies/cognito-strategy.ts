@@ -8,6 +8,15 @@ import {
 import {securityId, UserProfile} from '@loopback/security';
 import {AuthenticationStrategy} from '../types';
 
+const {verifierFactory} = require('@southlane/cognito-jwt-verifier')
+
+const verifier = verifierFactory({
+  region: process.env.AWS_REGION,
+  userPoolId: process.env.COGNITO_POOL_ID,
+  appClientId: process.env.COGNITO_CLIENT_ID,
+  tokenType: 'access', // either "access" or "id"
+})
+
 export class CognitoAuthenticationStrategy
   implements AuthenticationStrategy, OASEnhancer {
   name = 'cognito';
@@ -17,11 +26,13 @@ export class CognitoAuthenticationStrategy
 
   async authenticate(request: Request): Promise<UserProfile | undefined> {
     const token: string = this.extractCredentials(request);
-    const userProfile: UserProfile = {
-      [securityId]: "test",
-      email: "test",
-      name: "testman"
+
+    const payload = await verifier.verify(token);
+
+    let userProfile: UserProfile = {
+      [securityId]: payload["sub"]
     };
+
     return userProfile;
   }
 

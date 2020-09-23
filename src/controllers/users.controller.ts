@@ -23,7 +23,7 @@ import {
   put,
   requestBody
 } from '@loopback/rest';
-import {SecurityBindings, UserProfile} from '@loopback/security';
+import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {Users} from '../models';
 import {UsersRepository} from '../repositories';
 import {CognitoController} from './cognito.controller';
@@ -39,7 +39,7 @@ const userSchema = {
   },
 };
 
-@authenticate('jwt')
+@authenticate('cognito')
 export class UsersController {
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)
@@ -53,6 +53,45 @@ export class UsersController {
     @inject('controllers.CognitoController')
     public cognitoController: CognitoController
   ) {}
+
+  @get('/getUser', {
+    responses: {
+      '200': {
+        description: 'Model instance for user from access token',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Users, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async getUser(@inject(SecurityBindings.USER)
+  currentUserProfile: UserProfile,
+  ): Promise<Users[]> {
+    const sub = currentUserProfile[securityId];
+    return this.usersRepository.find({where: {cognito_id: sub}, limit: 3});
+  }
+
+  @get('/getUserSub', {
+    responses: {
+      '200': {
+        description: '',
+        schema: {
+          type: 'string',
+        },
+      },
+    },
+  })
+  async getUserSub(
+    @inject(SecurityBindings.USER)
+    currentUserProfile: UserProfile,
+  ): Promise<string> {
+    return currentUserProfile[securityId];
+  }
 
   @post('/users', {
     responses: {
@@ -77,6 +116,7 @@ export class UsersController {
     return this.usersRepository.create(users);
   }
 
+  @authenticate.skip()
   @post('/addUser', {
     responses: {
       '200': {

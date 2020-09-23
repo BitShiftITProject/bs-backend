@@ -1,4 +1,4 @@
-import {AuthenticationComponent} from '@loopback/authentication';
+import {AuthenticationComponent, registerAuthenticationStrategy} from '@loopback/authentication';
 import {
   JWTAuthenticationComponent,
 
@@ -16,7 +16,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MAtlasDataSource} from "./datasources";
 import {MySequence} from './sequence';
-
+import {CognitoAuthenticationStrategy} from "./strategies/cognito-strategy";
 
 export {ApplicationConfig};
 
@@ -55,5 +55,6 @@ export class BitshiftApplication extends BootMixin(
     this.component(JWTAuthenticationComponent);
     // Bind datasource
     this.dataSource(MAtlasDataSource, UserServiceBindings.DATASOURCE_NAME);
+    registerAuthenticationStrategy(this, CognitoAuthenticationStrategy);
   }
 }
