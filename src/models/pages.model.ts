@@ -11,10 +11,10 @@ export class Pages extends Entity {
   id: string;
 
   @property({
-    type: 'object',
+    type: 'string',
     required: true,
   })
-  content: object;
+  content: string;
 
   @property({
     type: 'string',
