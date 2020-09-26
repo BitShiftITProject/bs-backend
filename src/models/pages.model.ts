@@ -16,6 +16,10 @@ export class Pages extends Entity {
   })
   content: object;
 
+  @property({
+    type: 'string',
+  })
+  portfoliosId?: string;
 
   constructor(data?: Partial<Pages>) {
     super(data);

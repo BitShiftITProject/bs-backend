@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Pages} from './pages.model';
 
 @model()
 export class Portfolios extends Entity {
@@ -20,12 +21,6 @@ export class Portfolios extends Entity {
     type: 'string',
   })
   description: string;
-
-  @property({
-    type: 'object',
-  })
-  pages: object;
-
   @property({
     type: 'string',
     required: true,
@@ -36,6 +31,9 @@ export class Portfolios extends Entity {
     type: 'string',
   })
   usersId?: string;
+
+  @hasMany(() => Pages)
+  pages: Pages[];
 
   constructor(data?: Partial<Portfolios>) {
     super(data);
