@@ -32,6 +32,11 @@ export class Portfolios extends Entity {
   })
   owner: string;
 
+  @property({
+    type: 'string',
+  })
+  usersId?: string;
+
   constructor(data?: Partial<Portfolios>) {
     super(data);
   }
