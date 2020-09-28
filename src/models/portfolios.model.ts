@@ -1,4 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Pages} from './pages.model';
 
 @model()
@@ -21,11 +21,6 @@ export class Portfolios extends Entity {
     type: 'string',
   })
   description: string;
-  @property({
-    type: 'string',
-    required: true,
-  })
-  owner: string;
 
   @property({
     type: 'string',
