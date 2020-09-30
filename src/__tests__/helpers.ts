@@ -1,4 +1,4 @@
-import {Users} from "../models";
+import {Users} from "../models/index";
 
 /**
  * Generate a complete Users object for use with tests.
@@ -11,7 +11,6 @@ export function givenUser(user?: Partial<Users>) {
       last_name: 'Curry',
       cognito_id: 'arandomcognitoid',
       email: 'stephcurry@nba.com',
-      username: 'steph',
       portfolios: ['random1', 'random2'],
     },
     user,
