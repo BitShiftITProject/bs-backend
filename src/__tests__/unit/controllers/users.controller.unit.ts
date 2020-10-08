@@ -3,7 +3,8 @@ import {MyUserService} from '@loopback/authentication-jwt';
 import {UserProfile} from '@loopback/security';
 import {
   createStubInstance,
-  expect,
+
+  expect, sinon,
 
   StubbedInstanceWithSinonAccessor
 } from '@loopback/testlab';
@@ -42,17 +43,20 @@ describe('UsersController (unit)', () => {
       create.resolves(aUserWithId);
       const result = await usersController.create(aUser);
       expect(aUserWithId).to.eql(aUserWithId);
-      // sinon.assert.calledWith(create, aUser);
+      sinon.assert.calledWith(create, aUser);
 
     });
   });
 
   function resetRepositories() {
     usersRepository = createStubInstance(UsersRepository);
+
     aUser = givenUser();
+
     aUserWithId = givenUser({
       username: 'steph',
     });
+
     aListOfUsers = [
       aUserWithId,
       givenUser({
@@ -60,6 +64,7 @@ describe('UsersController (unit)', () => {
         occupation: 'goat',
       }),
     ] as Users[];
+
     aChangedUser = givenUser({
       username: aUserWithId.username,
       occupation: 'chef',
