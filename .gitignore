@@ -64,3 +64,4 @@ typings/
 *.tsbuildinfo
 
 *.jpg
+get_object_test.js
