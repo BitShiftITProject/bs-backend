@@ -1,5 +1,6 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Portfolios} from './portfolios.model';
+import {MediaItems} from './media-items.model';
 
 @model()
 export class Users extends Entity {
@@ -101,6 +102,9 @@ export class Users extends Entity {
 
   @hasMany(() => Portfolios)
   portfolios: Portfolios[];
+
+  @hasMany(() => MediaItems)
+  mediaItems: MediaItems[];
 
   constructor(data?: Partial<Users>) {
     super(data);

@@ -15,6 +15,10 @@ export class MediaItems extends Entity {
   })
   public_name: string;
 
+  @property({
+    type: 'string',
+  })
+  usersId?: string;
 
   constructor(data?: Partial<MediaItems>) {
     super(data);
