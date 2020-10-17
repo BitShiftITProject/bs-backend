@@ -1,3 +1,4 @@
+import {RestBindings} from '@loopback/rest';
 import * as dotenv from 'dotenv';
 import {ApplicationConfig, BitshiftApplication} from './application';
 dotenv.config();
@@ -10,6 +11,7 @@ export async function main(options: ApplicationConfig = {}) {
   await app.start();
 
   const url = app.restServer.url;
+  app.bind(RestBindings.REQUEST_BODY_PARSER_OPTIONS).to({limit: '50mb'})
   console.log(`Server is running at ${url}`);
   console.log(`Try ${url}/ping`);
 
