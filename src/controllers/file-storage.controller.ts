@@ -6,6 +6,7 @@ import multer from 'multer'
 import stream from 'stream'
 
 const {Duplex} = stream
+const bucket_s3 = "media-storage-bucket12"
 
 function bufferToStream(buffer) {
   const duplexStream = new Duplex()
@@ -154,11 +155,11 @@ export class StorageController {
       }
     }
   })
-  async getItem(@param.path.string('bucketName') bucket: string,
-    @param.path.string('itemKey') key: string): Promise<object> {
+  async getItem(@param.path.string('itemKey') key: string): Promise<object> {
     var params = {
-      Bucket: bucket,
-      Key: key
+      Bucket: bucket_s3,
+      Key: key,
+      ResponseContentEncoding: 'base64'
     }
     try {
       const item = await s3.getObject(params).promise()
