@@ -1,4 +1,5 @@
 {
   "recursive": true,
+  "timeout": 15000,
   "require": "source-map-support/register"
 }
