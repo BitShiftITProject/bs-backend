@@ -12,8 +12,8 @@ const {verifierFactory} = require('@southlane/cognito-jwt-verifier')
 
 const verifier = verifierFactory({
   region: process.env.AWS_REGION || "ap-southeast-2",
-  userPoolId: process.env.COGNITO_POOL_ID,
-  appClientId: process.env.COGNITO_CLIENT_ID,
+  userPoolId: process.env.COGNITO_POOL_ID || "ap-southeast-2_sszL0sJDL",
+  appClientId: process.env.COGNITO_CLIENT_ID || "7c772avb8631ofcue4ef0rka6l",
   tokenType: 'access', // either "access" or "id"
 })
 
