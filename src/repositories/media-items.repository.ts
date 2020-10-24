@@ -1,16 +1,16 @@
 import {DefaultCrudRepository} from '@loopback/repository';
-import {Test, TestRelations} from '../models';
+import {MediaItems, MediaItemsRelations} from '../models';
 import {MAtlasDataSource} from '../datasources';
 import {inject} from '@loopback/core';
 
-export class TestRepository extends DefaultCrudRepository<
-  Test,
-  typeof Test.prototype.id,
-  TestRelations
+export class MediaItemsRepository extends DefaultCrudRepository<
+  MediaItems,
+  typeof MediaItems.prototype.id,
+  MediaItemsRelations
 > {
   constructor(
     @inject('datasources.mAtlas') dataSource: MAtlasDataSource,
   ) {
-    super(Test, dataSource);
+    super(MediaItems, dataSource);
   }
 }

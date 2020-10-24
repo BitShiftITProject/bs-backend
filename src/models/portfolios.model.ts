@@ -27,6 +27,12 @@ export class Portfolios extends Entity {
   })
   usersId?: string;
 
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  pageOrder: string[];
+
   @hasMany(() => Pages)
   pages: Pages[];
 

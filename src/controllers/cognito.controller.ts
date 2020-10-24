@@ -139,4 +139,114 @@ export class CognitoController {
       throw err;
     }
   }
+
+  @post('/cognito/forgotpassword', {
+    responses: {
+      '200': {
+        description: 'Sends the user an email of the confirmation code to change password',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                Location: {type: 'string'},
+                headers: {
+                  type: 'object',
+                  properties: {
+                    'Content-Type': {type: 'string'},
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async forgotPassword(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              Email: {type: 'string'}
+            },
+          },
+        },
+      },
+    })
+    userData: {
+      Email: string
+    },
+  ) {
+    var params = {
+      ClientId: process.env.COGNITO_CLIENT_ID!,
+      Username: userData.Email
+    };
+    try {
+      const res = await cognitoidentityserviceprovider.forgotPassword(params).promise();
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @post('/cognito/changepassword', {
+    responses: {
+      '200': {
+        description: 'Changes the password of the user, given a confirmation code',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                Location: {type: 'string'},
+                headers: {
+                  type: 'object',
+                  properties: {
+                    'Content-Type': {type: 'string'},
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async changePassword(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              Email: {type: 'string'},
+              Password: {type: 'string'},
+              Code: {type: 'string'}
+            },
+          },
+        },
+      },
+    })
+    userData: {
+      Email: string,
+      Password: string,
+      Code: string
+    },
+  ) {
+    var params = {
+      ClientId: process.env.COGNITO_CLIENT_ID!,
+      Username: userData.Email,
+      Password: userData.Password,
+      ConfirmationCode: userData.Code
+    };
+    try {
+      const res = await cognitoidentityserviceprovider.confirmForgotPassword(params).promise();
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
