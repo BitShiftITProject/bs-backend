@@ -17,6 +17,12 @@ export class MediaItems extends Entity {
 
   @property({
     type: 'string',
+    required: true,
+  })
+  file_type: string;
+
+  @property({
+    type: 'string',
   })
   usersId?: string;
 

@@ -2,8 +2,7 @@ import {
   Count,
   CountSchema,
   Filter,
-  repository,
-  Where,
+  repository, Where
 } from '@loopback/repository';
 import {
   del,
@@ -13,18 +12,27 @@ import {
   param,
   patch,
   post,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
+import AWS from 'aws-sdk';
 import {
-  Users,
-  MediaItems,
+  MediaItems, Users
 } from '../models';
 import {UsersRepository} from '../repositories';
+
+const config = {
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  endpoint: process.env.S3_ENDPOINT
+}
+const s3 = new AWS.S3(config)
+const bucket = "media-storage-bucket12"
 
 export class UsersMediaItemsController {
   constructor(
     @repository(UsersRepository) protected usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   @get('/users/{id}/media-items', {
     responses: {
@@ -58,16 +66,48 @@ export class UsersMediaItemsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MediaItems, {
-            title: 'NewMediaItemsInUsers',
-            exclude: ['id'],
-            optional: ['usersId']
-          }),
+          schema: {
+            type: 'object',
+            properties: {
+              public_name: {type: 'string'},
+              file_type: {type: 'string'},
+              stream: {type: 'string'}
+            }
+          }
+          // schema: getModelSchemaRef(MediaItems, {
+          //   title: 'NewMediaItemsInUsers',
+          //   exclude: ['id'],
+          //   optional: ['usersId']
+          // }),
         },
       },
-    }) mediaItems: Omit<MediaItems, 'id'>,
-  ): Promise<MediaItems> {
-    return this.usersRepository.mediaItems(id).create(mediaItems);
+    }) mediaItems: {public_name: string, file_type: string, stream: string},
+  ): Promise<Object> {
+    const mediaItem = {
+      public_name: mediaItems.public_name,
+      file_type: mediaItems.file_type
+    }
+    try {
+      var response = (await this.usersRepository.mediaItems(id).create(mediaItem))
+      var media_id = response.getId().toString()
+    } catch (err) {
+      return (err)
+    }
+
+    return new Promise<Object>((resolve, reject) => {
+      const params = {
+        Bucket: bucket,
+        Key: media_id,
+        ContentEncoding: 'base64',
+        ContentType: mediaItems.file_type,
+        Body: mediaItems.stream
+      }
+      s3.upload(params, (err, result) => {
+        if (err) return (err);
+        else resolve(result)
+      })
+    })
+    // return response
   }
 
   @patch('/users/{id}/media-items', {
