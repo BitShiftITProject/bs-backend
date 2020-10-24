@@ -137,7 +137,7 @@ export class StorageController {
     }
   }
 
-  @get('/buckets/{bucketName}/{itemKey}', {
+  @get('/buckets/{itemKey}', {
     responses: {
       '200': {
         description: 'Get item from S3 bucket',
