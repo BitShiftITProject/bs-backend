@@ -150,7 +150,7 @@ export class UsersMediaItemsController {
     @param.query.object('where', getWhereSchemaFor(MediaItems)) where?: Where<MediaItems>,
   ): Promise<Count> {
     const params = {
-      Bucket: "",
+      Bucket: bucket,
       Key: id
     }
     s3.deleteObject(params, function (err, data) {
