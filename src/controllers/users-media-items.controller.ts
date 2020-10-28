@@ -149,15 +149,23 @@ export class UsersMediaItemsController {
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(MediaItems)) where?: Where<MediaItems>,
   ): Promise<Count> {
+    let self = this;
+    let promise: Promise<Count> = Promise.resolve({count: 0});
     const params = {
       Bucket: bucket,
       Key: id
     }
+
     s3.deleteObject(params, function (err, data) {
-      if (err) console.log(err, err.stack);
-      else console.log(data);
+      if (err) {
+        console.log(err, err.stack);
+      }
+      else {
+        console.log(data);
+        promise = self.usersRepository.mediaItems(id).delete(where);
+      };
     })
 
-    return this.usersRepository.mediaItems(id).delete(where);
+    return promise;
   }
 }
