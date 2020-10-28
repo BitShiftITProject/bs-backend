@@ -28,6 +28,11 @@ export class Portfolios extends Entity {
   usersId?: string;
 
   @property({
+    type: 'string',
+  })
+  theme: string;
+
+  @property({
     type: 'array',
     itemType: 'string',
   })

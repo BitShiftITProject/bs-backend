@@ -1,6 +1,6 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
-import {Portfolios} from './portfolios.model';
 import {MediaItems} from './media-items.model';
+import {Portfolios} from './portfolios.model';
 
 @model()
 export class Users extends Entity {
