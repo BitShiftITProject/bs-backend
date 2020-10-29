@@ -4,7 +4,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -14,7 +14,7 @@ import {
   patch,
   post,
   put,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
 import {Portfolios} from '../models';
 import {PortfoliosRepository} from '../repositories';
@@ -127,7 +127,7 @@ export class PortfoliosController {
 
   @patch('/portfolios/{id}', {
     responses: {
-      '204': {
+      '200': {
         description: 'Portfolios PATCH success',
       },
     },
@@ -142,8 +142,9 @@ export class PortfoliosController {
       },
     })
     portfolios: Portfolios,
-  ): Promise<void> {
-    await this.portfoliosRepository.updateById(id, portfolios);
+  ): Promise<Object> {
+    await this.portfoliosRepository.updateById(id, portfolios)
+    return {"id": id}
   }
 
   @put('/portfolios/{id}', {
