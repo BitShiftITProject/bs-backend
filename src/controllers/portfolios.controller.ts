@@ -4,7 +4,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
   del,
@@ -14,7 +14,7 @@ import {
   patch,
   post,
   put,
-  requestBody
+  requestBody,
 } from '@loopback/rest';
 import {Portfolios} from '../models';
 import {PortfoliosRepository} from '../repositories';
@@ -142,9 +142,11 @@ export class PortfoliosController {
       },
     })
     portfolios: Portfolios,
-  ): Promise<Object> {
-    await this.portfoliosRepository.updateById(id, portfolios)
-    return {"id": id}
+    @param.filter(Portfolios, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Portfolios>,
+  ): Promise<Portfolios> {
+    await this.portfoliosRepository.updateById(id, portfolios);
+    return this.portfoliosRepository.findById(id, filter);
   }
 
   @put('/portfolios/{id}', {
@@ -163,12 +165,13 @@ export class PortfoliosController {
 
   @del('/portfolios/{id}', {
     responses: {
-      '204': {
+      '200': {
         description: 'Portfolios DELETE success',
       },
     },
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<Object> {
     await this.portfoliosRepository.deleteById(id);
+    return {id: id};
   }
 }
