@@ -1,4 +1,5 @@
 import {PortfoliosController, UsersPortfoliosController} from '../../../controllers';
+import {Portfolios} from '../../../models';
 import {MediaItemsRepository, PagesRepository, PortfoliosRepository, UsersRepository} from '../../../repositories';
 import {test_portfolio_1, test_portfolio_2} from '../../data';
 import {TestDbDataSource} from '../../fixtures/datasources';
@@ -62,20 +63,21 @@ describe("PortfoliosController (unit)", () => {
   describe("#patch portfolios", () => {
 
     it("should patch portfolio #1 description", async () => {
-      const res = await portfoliosController.findById(test_portfolio_1_id);
+      const query = new Portfolios({description: "Updated portfolio #1 description"})
+      const res = await portfoliosController.updateById(test_portfolio_1_id, query);
+      // const picked = (({title, description}) => ({title, description}))(res)
+      console.log(res)
+
+      // assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_1))
+    })
+
+    it("should patch portfolio #1 description", async () => {
+      const query = new Portfolios({description: "Updated portfolio #2 description"})
+      const res = await portfoliosController.updateById(test_portfolio_2_id, query);
       const picked = (({title, description}) => ({title, description}))(res)
 
-      assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_1))
+      // assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_1))
     })
-
-    it("should patch portfolio #2 description", async () => {
-      const res = await portfoliosController.findById(test_portfolio_2_id);
-      const picked = (({title, description, theme, pageOrder}) =>
-        ({title, description, theme, pageOrder}))(res)
-
-      assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_2))
-    })
-
   })
 
   describe("#delete portfolios", () => {
