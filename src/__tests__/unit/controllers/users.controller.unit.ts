@@ -34,7 +34,7 @@ describe('UsersController (unit)', () => {
 
   usersRepository = createStubInstance(UsersRepository);
   cognitoController = new CognitoController();
-  usersController = new UsersController(jwtService, userService, userProfile, usersRepository, cognitoController);
+  usersController = new UsersController(usersRepository, cognitoController);
 
   describe('createUser', () => {
     it('creates a new user in database', async () => {

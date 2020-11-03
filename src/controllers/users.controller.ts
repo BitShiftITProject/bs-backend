@@ -1,9 +1,4 @@
-import {authenticate, TokenService} from '@loopback/authentication';
-import {
-  MyUserService, TokenServiceBindings,
-
-  UserServiceBindings
-} from '@loopback/authentication-jwt';
+import {authenticate} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {
   Count,
@@ -42,12 +37,6 @@ const userSchema = {
 @authenticate('cognito')
 export class UsersController {
   constructor(
-    @inject(TokenServiceBindings.TOKEN_SERVICE)
-    public jwtService: TokenService,
-    @inject(UserServiceBindings.USER_SERVICE)
-    public userService: MyUserService,
-    @inject(SecurityBindings.USER, {optional: true})
-    public user: UserProfile,
     @repository(UsersRepository)
     public usersRepository: UsersRepository,
     @inject('controllers.CognitoController')
