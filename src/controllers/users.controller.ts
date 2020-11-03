@@ -6,7 +6,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
   del,
@@ -16,7 +16,7 @@ import {
   patch,
   post,
   put,
-  requestBody
+  requestBody,
 } from '@loopback/rest';
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {Users} from '../models';
@@ -30,7 +30,7 @@ const userSchema = {
     last_name: {type: 'string'},
     email: {type: 'string'},
     password: {type: 'string'},
-    username: {type: 'string'}
+    username: {type: 'string'},
   },
 };
 
@@ -40,7 +40,7 @@ export class UsersController {
     @repository(UsersRepository)
     public usersRepository: UsersRepository,
     @inject('controllers.CognitoController')
-    public cognitoController: CognitoController
+    public cognitoController: CognitoController,
   ) {}
 
   @get('/getUser', {
@@ -58,8 +58,9 @@ export class UsersController {
       },
     },
   })
-  async getUser(@inject(SecurityBindings.USER)
-  currentUserProfile: UserProfile,
+  async getUser(
+    @inject(SecurityBindings.USER)
+    currentUserProfile: UserProfile,
   ): Promise<Users[]> {
     const sub = currentUserProfile[securityId];
     return this.usersRepository.find({where: {cognito_id: sub}, limit: 3});
@@ -113,7 +114,7 @@ export class UsersController {
         content: {
           'application/json': {
             schema: userSchema,
-          }
+          },
         },
       },
     },
@@ -127,28 +128,30 @@ export class UsersController {
       },
     })
     userData: {
-      first_name: string,
-      last_name: string,
-      email: string,
-      password: string,
-      username: string
+      first_name: string;
+      last_name: string;
+      email: string;
+      password: string;
+      username: string;
     },
   ): Promise<object> {
-
-    const cognitoUser = await this.cognitoController.createUser(userData.email, userData.password);
+    const cognitoUser = await this.cognitoController.createUser(
+      userData.email,
+      userData.password,
+    );
     if (cognitoUser) {
       var users = {
-        "first_name": userData.first_name,
-        "last_name": userData.last_name,
-        "email": userData.email,
-        "username": userData.username,
-        "cognito_id": cognitoUser.UserSub
-      }
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.email,
+        username: userData.username,
+        cognito_id: cognitoUser.UserSub,
+      };
       return this.usersRepository.create(users);
     } else {
       return {
-        "res": "Failed creating user in cognito id"
-      }
+        res: 'Failed creating user in cognito id',
+      };
     }
   }
 
@@ -227,7 +230,7 @@ export class UsersController {
 
   @patch('/users/{id}', {
     responses: {
-      '204': {
+      '200': {
         description: 'Users PATCH success',
       },
     },
@@ -242,8 +245,9 @@ export class UsersController {
       },
     })
     users: Users,
-  ): Promise<void> {
+  ): Promise<Object> {
     await this.usersRepository.updateById(id, users);
+    return {id: id};
   }
 
   @put('/users/{id}', {
