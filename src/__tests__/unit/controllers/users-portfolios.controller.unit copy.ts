@@ -1,6 +1,6 @@
 import {CognitoController, UsersController, UsersPortfoliosController} from '../../../controllers';
 import {MediaItemsRepository, PagesRepository, PortfoliosRepository, UsersRepository} from '../../../repositories';
-import {test_portfolio_1, test_user_1} from '../../data';
+import {test_portfolio_1, test_portfolio_2, test_user_1} from '../../data';
 import {TestDbDataSource} from '../../fixtures/datasources';
 
 const assert = require("chai").assert;
@@ -16,22 +16,55 @@ describe("UsersPortfoliosController (unit)", () => {
   const usersController = new UsersController(usersRepository, cognitoController);
   const usersPortfoliosController = new UsersPortfoliosController(usersRepository);
 
-  describe("#create user portfolio", () => {
+  describe("#create user portfolios", () => {
 
-    it("should create portfolio without error", async () => {
+    it("should create portfolio", async () => {
       const res = await usersPortfoliosController.create(test_user_1.username, test_portfolio_1);
+      // Extract title, description from res
       const picked = (({title, description}) => ({title, description}))(res)
 
-      assert.equal(JSON.stringify(test_portfolio_1), JSON.stringify(picked));
+      assert(JSON.stringify(test_portfolio_1) == JSON.stringify(picked) &&
+        res.usersId == test_user_1.username);
+    })
+
+    it("should create portfolio #2", async () => {
+      const res = await usersPortfoliosController.create(test_user_1.username, test_portfolio_2);
+      // Extract title, description, theme, and pageOrder from res
+      const picked = (({title, description, theme, pageOrder}) =>
+        ({title, description, theme, pageOrder}))(res)
+
+      assert(JSON.stringify(test_portfolio_2) == JSON.stringify(picked) &&
+        res.usersId == test_user_1.username);
     })
   })
 
-  describe("#delete user portfolio", () => {
+  describe("#get portfolios", () => {
 
-    it("should delete portfolio without error", async () => {
-      const query = test_portfolio_1.toJSON()
+    it("should retrieve both created portfolios", async () => {
+      const res = await usersPortfoliosController.find(test_user_1.username);
+
+      var res_filtered = res.map((portfolio) => {
+        let portfolio_json = portfolio.toJSON()
+        delete portfolio_json["id"]
+        return portfolio_json
+      })
+
+      // expected userIds for created portfolios
+      test_portfolio_1["usersId"] = test_user_1.username
+      test_portfolio_2["usersId"] = test_user_1.username
+      const match = [test_portfolio_1, test_portfolio_2]
+
+      assert.equal(JSON.stringify(match), JSON.stringify(res_filtered))
+    })
+
+  })
+
+  describe("#delete user portfolios", () => {
+
+    it("should delete both portfolios", async () => {
+      const query = {title: test_portfolio_1.title}
       const res = await usersPortfoliosController.delete(test_user_1.username, query);
-      assert(res.count > 0);
+      assert.equal(res.count, 2);
     })
   })
 });

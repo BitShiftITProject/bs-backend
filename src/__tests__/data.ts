@@ -9,12 +9,12 @@ export const test_user_1 = new Users({
 })
 
 export const test_portfolio_1 = new Portfolios({
-  title: "Test Portfolio 1",
+  title: "Test Portfolio",
   description: "Test Portfolio 1 Description"
 })
 
 export const test_portfolio_2 = new Portfolios({
-  title: "Test Portfolio 2",
+  title: "Test Portfolio",
   description: "Test Portfolio 2 Description",
   theme: "Dark",
   pageOrder: []
