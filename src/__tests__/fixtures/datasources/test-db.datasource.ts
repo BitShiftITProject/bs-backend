@@ -8,6 +8,9 @@ const dbUsername = "admin"
 const dbPassword = "Admin123!"
 const dbName = "bitshift_db_test";
 
+console.log('username', process.env.ATLAS_USER_NAME);
+console.log('password', process.env.ATLAS_USER_PASSWORD);
+
 const config = {
   name: 'testDb',
   connector: 'mongodb',
