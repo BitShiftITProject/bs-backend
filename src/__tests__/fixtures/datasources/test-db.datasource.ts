@@ -5,7 +5,7 @@ require('dotenv').config();
 const dbName = "bitshift_db_test";
 
 const config = {
-  name: 'mAtlas',
+  name: 'testDb',
   connector: 'mongodb',
   url: `mongodb+srv://${process.env.ATLAS_USER_NAME}:${process.env.ATLAS_USER_PASSWORD}@cluster0.1hzjh.mongodb.net/${dbName}?retryWrites=true&w=majority`,
   host: '',
@@ -21,13 +21,13 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class MAtlasDataSource extends juggler.DataSource
+export class TestDbDataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'mAtlas';
+  static dataSourceName = 'testDb';
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.mAtlas', {optional: true})
+    @inject('datasources.config.testDb', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
