@@ -16,7 +16,7 @@ export class UsersRepository extends DefaultCrudRepository<
   public readonly mediaItems: HasManyRepositoryFactory<MediaItems, typeof Users.prototype.username>;
 
   constructor(
-    @inject('datasources.testDb') dataSource: TestDbDataSource, @repository.getter('PortfoliosRepository') protected portfoliosRepositoryGetter: Getter<PortfoliosRepository>, @repository.getter('MediaItemsRepository') protected mediaItemsRepositoryGetter: Getter<MediaItemsRepository>,
+    @inject('datasources.testDb') dataSource: TestDbDataSource, @repository.getter('PortfoliosRepository') public portfoliosRepositoryGetter: Getter<PortfoliosRepository>, @repository.getter('MediaItemsRepository') public mediaItemsRepositoryGetter: Getter<MediaItemsRepository>,
   ) {
     super(Users, dataSource);
     this.mediaItems = this.createHasManyRepositoryFactoryFor('mediaItems', mediaItemsRepositoryGetter,);
