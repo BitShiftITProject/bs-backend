@@ -29,4 +29,12 @@ describe('PagesController (unit)', () => {
 
   })
 
+  describe('#get pages', () => {
+
+  })
+
+  describe('#delete pages', () => {
+
+  })
+
 });
