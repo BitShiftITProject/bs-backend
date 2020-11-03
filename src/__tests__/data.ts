@@ -1,4 +1,4 @@
-import {Portfolios, Users} from "../models"
+import {Pages, Portfolios, Users} from "../models"
 
 export const test_user_1 = new Users({
   username: "USER",
@@ -18,4 +18,18 @@ export const test_portfolio_2 = new Portfolios({
   description: "Test Portfolio 2 Description",
   theme: "Dark",
   pageOrder: []
+})
+
+export const test_page_empty = new Pages({
+  title: "Empty page",
+  content: {
+    sections: []
+  }
+})
+
+export const test_page_basic = new Pages({
+  title: "Basic page",
+  content: {
+    sections: [{id: "text", data: ""}]
+  }
 })
