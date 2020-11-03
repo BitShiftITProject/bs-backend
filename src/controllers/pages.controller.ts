@@ -4,17 +4,14 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+  patch, post,
   put,
-  del,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
 import {Pages} from '../models';
 import {PagesRepository} from '../repositories';
@@ -22,7 +19,7 @@ import {PagesRepository} from '../repositories';
 export class PagesController {
   constructor(
     @repository(PagesRepository)
-    public pagesRepository : PagesRepository,
+    public pagesRepository: PagesRepository,
   ) {}
 
   @post('/pages', {
@@ -39,7 +36,6 @@ export class PagesController {
         'application/json': {
           schema: getModelSchemaRef(Pages, {
             title: 'NewPages',
-            
           }),
         },
       },
