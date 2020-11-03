@@ -2,12 +2,16 @@ import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 require('dotenv').config();
 
+// const dbUsername = process.env.ATLAS_USER_NAME;
+// const dbPassword = process.env.ATLAS_USER_PASSWORD;
+const dbUsername = "admin"
+const dbPassword = "Admin123!"
 const dbName = "bitshift_db_test";
 
 const config = {
   name: 'testDb',
   connector: 'mongodb',
-  url: `mongodb+srv://${process.env.ATLAS_USER_NAME}:${process.env.ATLAS_USER_PASSWORD}@cluster0.1hzjh.mongodb.net/${dbName}?retryWrites=true&w=majority`,
+  url: `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.1hzjh.mongodb.net/${dbName}?retryWrites=true&w=majority`,
   host: '',
   port: 0,
   user: '',
