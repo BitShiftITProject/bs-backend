@@ -65,19 +65,17 @@ describe("PortfoliosController (unit)", () => {
     it("should patch portfolio #1 description", async () => {
       const query = new Portfolios({description: "Updated portfolio #1 description"})
       const res = await portfoliosController.updateById(test_portfolio_1_id, query);
-      // const picked = (({title, description}) => ({title, description}))(res)
-      console.log(res)
 
-      // assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_1))
+      assert.equal(res.description, query.description)
     })
 
-    it("should patch portfolio #1 description", async () => {
+    it("should patch portfolio #2 description", async () => {
       const query = new Portfolios({description: "Updated portfolio #2 description"})
       const res = await portfoliosController.updateById(test_portfolio_2_id, query);
-      const picked = (({title, description}) => ({title, description}))(res)
 
-      // assert.equal(JSON.stringify(picked), JSON.stringify(test_portfolio_1))
+      assert.equal(res.description, query.description)
     })
+
   })
 
   describe("#delete portfolios", () => {
