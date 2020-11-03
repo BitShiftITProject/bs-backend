@@ -27,17 +27,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      env:
-        COGNITO_POOL_ID: ap-southeast-2_sszL0sJDL
-        COGNITO_CLIENT_ID: 7c772avb8631ofcue4ef0rka6l
-        AWS_ACCESS_KEY_ID: AKIAISPW4NNPVE3CAQDA
-        AWS_SECRET_ACCESS_KEY: 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
-        AWS_REGION: southeast-2
-        ATLAS_USER_NAME: admin
-        ATLAS_USER_PASSWORD: Admin123!
-        ATLAS_DB_NAME: bitshift_db
     - run: npm install
     - run: npm run build --if-present
     - run: npm test
       env:
         CI: true
+        ATLAS_USER_NAME: ${{ secrets.ATLAS_USER_NAME }}
+        ATLAS_USER_PASSWORD: ${{ secrets.ATLAS_USER_PASSWORD }}
+        ATLAS_DB_NAME: bitshift_db

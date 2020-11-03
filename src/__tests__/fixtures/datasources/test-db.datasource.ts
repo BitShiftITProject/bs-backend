@@ -2,11 +2,12 @@ import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 require('dotenv').config();
 
-// const dbUsername = process.env.ATLAS_USER_NAME;
-// const dbPassword = process.env.ATLAS_USER_PASSWORD;
-const dbUsername = "admin"
-const dbPassword = "Admin123!"
+const dbUsername = process.env.ATLAS_USER_NAME;
+const dbPassword = process.env.ATLAS_USER_PASSWORD;
 const dbName = "bitshift_db_test";
+
+// console.log('username', process.env.ATLAS_USER_NAME);
+// console.log('password', process.env.ATLAS_USER_PASSWORD);
 
 const config = {
   name: 'testDb',
