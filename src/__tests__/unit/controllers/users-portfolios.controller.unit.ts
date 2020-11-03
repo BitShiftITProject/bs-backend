@@ -1,8 +1,7 @@
-import {CognitoController, UsersController, UsersPortfoliosController} from '../../../controllers';
+import {UsersPortfoliosController} from '../../../controllers';
 import {MediaItemsRepository, PagesRepository, PortfoliosRepository, UsersRepository} from '../../../repositories';
 import {test_portfolio_1, test_portfolio_2, test_user_1} from '../../data';
 import {TestDbDataSource} from '../../fixtures/datasources';
-
 const assert = require("chai").assert;
 
 describe("UsersPortfoliosController (unit)", () => {
@@ -12,13 +11,11 @@ describe("UsersPortfoliosController (unit)", () => {
   const mediaItemsRepository = new MediaItemsRepository(testDb);
   const usersRepository = new UsersRepository(testDb,
     async () => portfoliosRepository, async () => mediaItemsRepository);
-  const cognitoController = new CognitoController();
-  const usersController = new UsersController(usersRepository, cognitoController);
   const usersPortfoliosController = new UsersPortfoliosController(usersRepository);
 
   describe("#create user portfolios", () => {
 
-    it("should create portfolio", async () => {
+    it("should create user portfolio #1", async () => {
       const res = await usersPortfoliosController.create(test_user_1.username, test_portfolio_1);
       // Extract title, description from res
       const picked = (({title, description}) => ({title, description}))(res)
@@ -27,7 +24,7 @@ describe("UsersPortfoliosController (unit)", () => {
         res.usersId == test_user_1.username);
     })
 
-    it("should create portfolio #2", async () => {
+    it("should create user portfolio #2", async () => {
       const res = await usersPortfoliosController.create(test_user_1.username, test_portfolio_2);
       // Extract title, description, theme, and pageOrder from res
       const picked = (({title, description, theme, pageOrder}) =>
@@ -38,9 +35,9 @@ describe("UsersPortfoliosController (unit)", () => {
     })
   })
 
-  describe("#get portfolios", () => {
+  describe("#get user portfolios", () => {
 
-    it("should retrieve both created portfolios", async () => {
+    it("should retrieve both user portfolios", async () => {
       const res = await usersPortfoliosController.find(test_user_1.username);
 
       var res_filtered = res.map((portfolio) => {
@@ -61,7 +58,7 @@ describe("UsersPortfoliosController (unit)", () => {
 
   describe("#delete user portfolios", () => {
 
-    it("should delete both portfolios", async () => {
+    it("should delete both user portfolios", async () => {
       const query = {title: test_portfolio_1.title}
       const res = await usersPortfoliosController.delete(test_user_1.username, query);
       assert.equal(res.count, 2);
