@@ -1,4 +1,5 @@
 import {CognitoController, UsersController, UsersPortfoliosController} from '../../../controllers';
+import {Portfolios} from '../../../models';
 import {MediaItemsRepository, PagesRepository, PortfoliosRepository, UsersRepository} from '../../../repositories';
 import {TestDbDataSource} from '../../fixtures/datasources';
 
@@ -19,7 +20,18 @@ describe('CognitoController (unit)', () => {
         Email: "test@test.com",
         Password: "Test123!"
       }
-      const res = cognitoController.create(user);
+      // const res = cognitoController.create(user);
     });
+    it('should create a portfolio', () => {
+      const data = {
+        title: 'asd',
+        description: 'asdlfksjadlf'
+      }
+      const portfolios = new Portfolios(data)
+      const res = usersPortfoliosController.create("5fa0fe65b5f48a3d1c39d937", portfolios);
+      res.then((data) => {
+        console.log(data);
+      })
+    })
   })
 });
