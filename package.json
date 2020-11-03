@@ -59,6 +59,7 @@
     "@southlane/cognito-jwt-verifier": "^0.1.6",
     "aws-sdk": "^2.758.0",
     "buffer": "^5.6.0",
+    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "jugglingdb-dynamodb": "^0.1.9-6",
     "loopback-connector-dynamodb": "0.1.0-5",
