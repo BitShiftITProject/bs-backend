@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Portfolios} from './portfolios.model';
+import {MediaItems} from './media-items.model';
 
 @model()
 export class Users extends Entity {
@@ -36,12 +38,6 @@ export class Users extends Entity {
     required: true,
   })
   username: string;
-
-  @property({
-    type: 'array',
-    itemType: 'string',
-  })
-  portfolios: string[];
 
   @property({
     type: 'string',
@@ -103,6 +99,12 @@ export class Users extends Entity {
     type: 'string',
   })
   country: string;
+
+  @hasMany(() => Portfolios)
+  portfolios: Portfolios[];
+
+  @hasMany(() => MediaItems)
+  mediaItems: MediaItems[];
 
   constructor(data?: Partial<Users>) {
     super(data);
