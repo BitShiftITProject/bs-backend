@@ -53,9 +53,7 @@ export class PagesController {
       },
     },
   })
-  async count(
-    @param.where(Pages) where?: Where<Pages>,
-  ): Promise<Count> {
+  async count(@param.where(Pages) where?: Where<Pages>): Promise<Count> {
     return this.pagesRepository.count(where);
   }
 
@@ -74,9 +72,7 @@ export class PagesController {
       },
     },
   })
-  async find(
-    @param.filter(Pages) filter?: Filter<Pages>,
-  ): Promise<Pages[]> {
+  async find(@param.filter(Pages) filter?: Filter<Pages>): Promise<Pages[]> {
     return this.pagesRepository.find(filter);
   }
 
@@ -116,14 +112,15 @@ export class PagesController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Pages, {exclude: 'where'}) filter?: FilterExcludingWhere<Pages>
+    @param.filter(Pages, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Pages>,
   ): Promise<Pages> {
     return this.pagesRepository.findById(id, filter);
   }
 
   @patch('/pages/{id}', {
     responses: {
-      '204': {
+      '200': {
         description: 'Pages PATCH success',
       },
     },
@@ -138,8 +135,11 @@ export class PagesController {
       },
     })
     pages: Pages,
-  ): Promise<void> {
+    @param.filter(Pages, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Pages>,
+  ): Promise<Pages> {
     await this.pagesRepository.updateById(id, pages);
+    return this.pagesRepository.findById(id, filter);
   }
 
   @put('/pages/{id}', {
@@ -158,12 +158,13 @@ export class PagesController {
 
   @del('/pages/{id}', {
     responses: {
-      '204': {
+      '200': {
         description: 'Pages DELETE success',
       },
     },
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<Object> {
     await this.pagesRepository.deleteById(id);
+    return {id: id};
   }
 }
