@@ -4,17 +4,14 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
+  del, get,
+  getModelSchemaRef, param,
+  patch, post,
   put,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
 import {Pages} from '../models';
 import {PagesRepository} from '../repositories';
