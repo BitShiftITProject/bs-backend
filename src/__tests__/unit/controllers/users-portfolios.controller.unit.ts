@@ -13,6 +13,7 @@ describe("UsersPortfoliosController (unit)", () => {
     async () => portfoliosRepository, async () => mediaItemsRepository);
   const usersPortfoliosController = new UsersPortfoliosController(usersRepository);
 
+
   describe("#create user portfolios", () => {
 
     it("should create user portfolio #1", async () => {
